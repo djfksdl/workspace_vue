@@ -6,6 +6,7 @@
         <li>{{ menus[0] }}</li>
         <li>{{ menus[1] }}</li>
         <li>{{ menus[2] }}</li>
+        
     </ul>
 
     <table border="1">
