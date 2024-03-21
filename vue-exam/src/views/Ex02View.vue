@@ -8,6 +8,10 @@
         <li>{{ menus[2] }}</li>
         
     </ul>
+    <ul v-bind:key="i" v-for="(menu,i) in menus">
+        <li>{{menu}}</li>
+        
+    </ul>
 
     <table border="1">
         <thead>
