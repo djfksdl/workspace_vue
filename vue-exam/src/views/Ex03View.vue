@@ -26,8 +26,8 @@ export default{
         };
     },
     methods:{
-        name, // 필드이름이랑 값이름이랑 같으면 줄여쓸 수 있다. 함수도 마찬가지
-        plus() {//function이랑 앞에 필드이름이랑 줄일 수 있다. 위에 data(){}도 이와 마찬가지다.
+        name, // 필드이름이랑 값이름이 같으면 줄여쓸 수 있다. 함수도 마찬가지
+        plus() {//function이랑 앞에 필드이름이랑 줄일 수 있다. 위에 data(){}안에 있는 값도 마찬가지다.
             //console.log("클릭");
             this.counter++;//data에 있는 counter를 공략
         },

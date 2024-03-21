@@ -7,11 +7,16 @@
         <label for="uName">이름</label>
         <!-- <input id="uName" type="text" name="name" v-bind:value="name"> -->
         <input id="uName" type="text" name="name" v-model="personVo.name">
+
         <br>
+
         <label>전화번호</label>
         <input type="text" name="hp" v-model="personVo.hp"><!--양방향으로 바인딩. 그전까지는 단방향 바인딩이었음. value를 쓰지않아도 기본적으로 value를 인식함-->
+        
         <br>
+        
         <textarea name="content" v-model="personVo.content"></textarea>
+        
         <br><br>
         <button type="button" v-on:click="setPersonVo">값쓰기</button>
         <button type="submit">값수정</button>

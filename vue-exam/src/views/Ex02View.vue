@@ -40,7 +40,7 @@
 </template>
 <script>
     export default{
-        name: "Ex01View",
+        name: "Ex02View",
         components:{},
         data(){
             return {//객체형태이다.

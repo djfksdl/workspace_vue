@@ -31,6 +31,7 @@
     <span v-bind:key="i" v-for="(ageInfo, i) in radioAges">
         <label>{{ageInfo.text}}</label>
         <input type="radio" name="age" v-bind:value="ageInfo.code" v-model="aPicked">
+        <!--얘는 왜 단방향,양방향 둘다씀? code는 우리가 바꾸는 값이 아니니까 .. aPicked는 계속 바뀌니까!-->
     </span>
 
 </template>
@@ -42,7 +43,7 @@ export default{
         return{     
             title:"Vue공부",
             subTitle:"반복문",   
-            pList:[],
+            pList:[], //처음에 빈화면 보이려면 빈값을 넣어주고, 나중에 메소드에서 값을 넣어주면 된다.
             aPicked:"30",
             radioAges:[{text:"10대",code:"10"},
                        {text:"20대",code:"20"},
