@@ -1,5 +1,5 @@
 <template>
-  <!--여기에 있는 메뉴는 안쓰기때문에 지움 + style도 지움-->
+  <!--여기에 있는 메뉴는 안쓰기때문에 지움 + style도 지움, router-view는 지우면 페이지 안나옴-->
   <router-view/>
 </template>
 
