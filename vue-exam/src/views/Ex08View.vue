@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-bind:key="personVo.no" v-for="(personVo, i) in pList" ><!--순번을 알고싶으면 i를 추가해줌. i는 이름 아무거나 넣어도됨 3:29-->
+            <tr v-bind:key="personVo.no" v-for="(personVo, i) in pList" ><!--순번을 알고싶으면 i를 추가해줌. i는 이름 아무거나 넣어도됨-->
                 <td>{{ i+1 }}</td>
                 <td>{{ personVo.no }}</td>
                 <td>{{ personVo.name }}</td>

@@ -33,7 +33,7 @@ export default{
         },
         minus:function minus(){
             //console.log("빼기");
-            this.counter--;// -=로 써도 되고 10:15
+            this.counter--;// this.counter=this.counter-1 /this.counter-=1로 써도 됨
         },
         setMessage(){
             //console.log("메세지출력");
