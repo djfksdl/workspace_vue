@@ -10,7 +10,7 @@ const routes = [
     component: AddListView
   },
   {
-    path: '/delete/',
+    path: '/delete/:no',
     name: '/delform',
     component: DelFormView
   },
