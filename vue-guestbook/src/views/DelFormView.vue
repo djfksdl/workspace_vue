@@ -47,7 +47,7 @@
                 if(response.data>0){//String result로 보낼때는 response.data.count로 받아야함
                     this.$router.push({path:'/'})
                 }else{
-                    alert("패스워드를 입력해주세요");
+                    alert("패스워드를 확인해주세요");
                 }
                 
 
