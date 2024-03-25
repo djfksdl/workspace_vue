@@ -60,7 +60,7 @@
 
                     <div id="user">
                         <div id="loginForm">
-                            <form action="" method="">
+                            <form v-on:submit.prevent="login" action="" method="">
 
                                 <!-- 아이디 -->
                                 <div class="form-group">
@@ -108,7 +108,9 @@ export default {
     data() {
         return {
             login(){
-                
+                console.log("동작");
+
+                //데이터모으기
             }
         };
     },
