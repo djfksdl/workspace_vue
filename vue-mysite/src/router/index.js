@@ -18,6 +18,6 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})//이것도 지우면 안됨. 11:38
+})//이것도 지우면 안됨. history mode쓰는 설정이니까!
 
 export default router

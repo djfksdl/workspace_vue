@@ -131,17 +131,17 @@ export default {
 
                 }).then(response => {
                     console.log(response); //수신데이타
-                    console.log(response.data); //수신데이타 authUser
+                    console.log(response.data); //수신데이타 authUser->storage.js sata(){}안에 authUser에 저장시킬거임
                     
                     //로그인 사용자 정보
                     let authUser = response.data;
 
-                    //token 응답문서의 Request header에 있음. "Authorization", -> 헤더에 있는거 꺼내서 storage.js에 있는 token에 넣을 거임
-                    // "Authorization Bearer dsfsdf" 실제토큰이 이런 모양처럼 생김. 뭘? 때면 된다. 4:47
-                    const  token =response.headers.authorization.split(" ")[1];
+                    //token: 응답문서의 Request header에 있음. "Authorization", "Bearer" +token -> 헤더에 있는거 꺼내서 storage.js sata(){}안에 token에 넣을 거임->그래서 일단 꺼내야함.
+                    // "Authorization Bearer dsfwerlfksdf" 실제토큰이 이런 모양처럼 생김.-> 앞에 두부분은 헤더에 정확하게 있다. 그래서 우리는 마지막부분만 떼면 된다. 
+                    const  token =response.headers.authorization.split(" ")[1]; //응답문서의. 헤더에. Authorization(이거는 앞에꺼가 단어가 정해져있어서메소드가 만들어져있다)를 빼고 Bearer dsfwerlfksdf까지 끊어줌. 그리고나서 공백으로 split해준다.거기서 2번째 방있는걸 골라야 dsfwerlfksdf이게 온다.-> 토큰값은 안바꿀거라 const로 선언!
 
-                    //vuex에 저장
-                    this.$store.commit("setAuthUser",authUser); //commit으로 넣을 수 있다.(키,값)
+                    //vuex(storage.js)에 저장
+                    this.$store.commit("setAuthUser",authUser); //commit으로 넣을 수 있다.(키,값:payload)
                     this.$store.commit("setToken",token);
 
                     console.log(authUser);
