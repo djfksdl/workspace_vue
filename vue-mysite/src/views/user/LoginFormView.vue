@@ -65,13 +65,13 @@
                                 <!-- 아이디 -->
                                 <div class="form-group">
                                     <label class="form-text" for="input-uid">아이디</label> 
-                                    <input type="text" id="input-uid" name="" value="" placeholder="아이디를 입력하세요">
+                                    <input type="text" id="input-uid" name="" v-model="userVo.id" placeholder="아이디를 입력하세요">
                                 </div>
 
                                 <!-- 비밀번호 -->
                                 <div class="form-group">
                                     <label class="form-text" for="input-pass">비밀번호</label> 
-                                    <input type="text" id="input-pass" name="" value="" placeholder="비밀번호를 입력하세요"	>
+                                    <input type="text" id="input-pass" name="" v-model="userVo.password" placeholder="비밀번호를 입력하세요"	>
                                 </div>
 
                                 
@@ -102,19 +102,44 @@
 </template>
 <script>
 import "@/assets/css/user.css"
+import axios from 'axios'
+
 export default {
     name: "LoginFormView",
     components: {},
     data() {
         return {
-            login(){
-                console.log("동작");
-
-                //데이터모으기
+            userVo:{
+                id:"",
+                password:""
             }
         };
     },
-    methods: {},
+    methods: {
+        login(){
+                console.log("로그인");
+
+                //console.log(this.userVo.id);
+                //데이터모으기
+                //서버전송
+                axios({
+                    method: 'post', // put, post, delete 
+                    url: 'http://localhost:9000/api/users/login',
+                    headers: { "Content-Type": "application/json; charset=utf-8" }, //전송타입
+                    //params: guestbookVo, //get방식 파라미터로 값이 전달->컨트롤러에서 @ModelAttribute로 받고
+                    data: this.userVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달 ->@RequestBody로 받는다.
+                    responseType: 'json' //수신타입
+                    
+                }).then(response => {
+                    console.log(response); //수신데이타
+                }).catch(error => {
+                    console.log(error);
+                });
+
+                //후처리
+
+            }
+    },
     created(){}
  };
 </script>
