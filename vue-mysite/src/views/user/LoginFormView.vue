@@ -6,15 +6,14 @@
                 <h1>
                     <a href="">MySite</a>
                 </h1>
-
-                <!-- 
-                <ul>
-                    <li>황일영 님 안녕하세요^^</li>
-                    <li><a href="" class="btn_s">로그아웃</a></li>
+                
+                <ul v-if="this.$store.state.authUser != null">
+                    <li>{{this.$store.state.authUser.name}} 님 안녕하세요^^</li>
+                    <li><button v-on:click="logout" type="button" class="btn_s">로그아웃</button></li>
                     <li><a href="" class="btn_s">회원정보수정</a></li>
                 </ul>
-                -->	
-                <ul>
+                
+                <ul v-if="this.$store.state.authUser == null">
                     <li><a href="" class="btn_s">로그인</a></li>
                     <li><a href="" class="btn_s">회원가입</a></li>
                 </ul>
@@ -129,9 +128,27 @@ export default {
                     //params: guestbookVo, //get방식 파라미터로 값이 전달->컨트롤러에서 @ModelAttribute로 받고
                     data: this.userVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달 ->@RequestBody로 받는다.
                     responseType: 'json' //수신타입
-                    
+
                 }).then(response => {
                     console.log(response); //수신데이타
+                    console.log(response.data); //수신데이타 authUser
+                    
+                    //로그인 사용자 정보
+                    let authUser = response.data;
+
+                    //token 응답문서의 헤더에 있음. "Authorization", -> 헤더에 있는거 꺼내서 storage.js에 있는 token에 넣을 거임
+                    // "Authorization Bearer dsfsdf" 실제토큰이 이런 모양처럼 생김. 뭘 때면 된다. 4:47
+                    const  token =response.headers.authorization.split(" ")[1];
+
+                    //vuex에 저장
+                    this.$store.commit("setAuthUser",authUser);                    
+                    this.$store.commit("setToken",token);
+
+                    console.log(authUser);
+                    console.log(token);
+
+                    this.$router.push("/");
+
                 }).catch(error => {
                     console.log(error);
                 });
@@ -139,6 +156,7 @@ export default {
                 //후처리
 
             }
+            
     },
     created(){}
  };

@@ -28,26 +28,7 @@
                         <td>02-2222-2222</td>
                         <td>
                             <button type="button">삭제하기</button>&nbsp;&nbsp;
-                            <a href="">[수정폼이동]</a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>이효리</td>
-                        <td>010-3444-4444</td>
-                        <td>02-3444-4444</td>
-                        <td>
-                            <button type="button">삭제하기</button>&nbsp;&nbsp;
-                            <a href="">[수정폼이동]</a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>유재석</td>
-                        <td>010-5555-5555</td>
-                        <td>02-5555-5555</td>
-                        <td>
-                            <button type="button">삭제하기</button>&nbsp;&nbsp;
+                            <!-- <router-link v-bind:to="`/delete/${guestbookVo.no}`">삭제</router-link> -->
                             <a href="">[수정폼이동]</a>
                         </td>
                     </tr>
@@ -65,7 +46,9 @@ export default {
    data() {
        return {};
    },
-   methods: {},
+   methods: {
+
+   },
    created(){}
 };
 </script>
