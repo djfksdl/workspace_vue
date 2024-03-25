@@ -108,7 +108,7 @@ export default {
     components: {},
     data() {
         return {
-            userVo:{
+            userVo:{//보내기 전에 미리 묶어준다.
                 id:"",
                 password:""
             }
@@ -125,8 +125,8 @@ export default {
                     method: 'post', // put, post, delete 
                     url: 'http://localhost:9000/api/users/login',
                     headers: { "Content-Type": "application/json; charset=utf-8" }, //전송타입
-                    //params: guestbookVo, //get방식 파라미터로 값이 전달->컨트롤러에서 @ModelAttribute로 받고
-                    data: this.userVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달 ->@RequestBody로 받는다.
+                    //params: guestbookVo, //get방식 파라미터로 값이 전달->서버 컨트롤러에서 @ModelAttribute로 받고
+                    data: this.userVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달 ->서버 컨트롤러에서 @RequestBody로 받는다.
                     responseType: 'json' //수신타입
 
                 }).then(response => {
@@ -136,12 +136,12 @@ export default {
                     //로그인 사용자 정보
                     let authUser = response.data;
 
-                    //token 응답문서의 헤더에 있음. "Authorization", -> 헤더에 있는거 꺼내서 storage.js에 있는 token에 넣을 거임
-                    // "Authorization Bearer dsfsdf" 실제토큰이 이런 모양처럼 생김. 뭘 때면 된다. 4:47
+                    //token 응답문서의 Request header에 있음. "Authorization", -> 헤더에 있는거 꺼내서 storage.js에 있는 token에 넣을 거임
+                    // "Authorization Bearer dsfsdf" 실제토큰이 이런 모양처럼 생김. 뭘? 때면 된다. 4:47
                     const  token =response.headers.authorization.split(" ")[1];
 
                     //vuex에 저장
-                    this.$store.commit("setAuthUser",authUser);                    
+                    this.$store.commit("setAuthUser",authUser); //commit으로 넣을 수 있다.(키,값)
                     this.$store.commit("setToken",token);
 
                     console.log(authUser);
@@ -156,7 +156,7 @@ export default {
                 //후처리
 
             }
-            
+
     },
     created(){}
  };
