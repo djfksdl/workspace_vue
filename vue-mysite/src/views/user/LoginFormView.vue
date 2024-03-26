@@ -101,7 +101,7 @@ export default {
             axios({
                 method: 'post', // put, post, delete 
                 url: 'http://localhost:9000/api/users/login',
-                headers: { "Content-Type": "application/json; charset=utf-8" }, //전송타입
+                headers: { "Content-Type": "application/json; charset=utf-8" }, //전송타입 
                 //params: guestbookVo, //get방식 파라미터로 값이 전달->서버 컨트롤러에서 @ModelAttribute로 받고
                 data: this.userVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달 ->서버 컨트롤러에서 @RequestBody로 받는다.
                 responseType: 'json' //수신타입
