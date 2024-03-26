@@ -2,35 +2,7 @@
     <div>
         <div id="wrap">
 
-        <div id="header" class="clearfix">
-            <h1>
-                <a href="">MySite</a>
-            </h1>
-
-            <!-- 
-            <ul>
-                <li>황일영 님 안녕하세요^^</li>
-                <li><a href="" class="btn_s">로그아웃</a></li>
-                <li><a href="" class="btn_s">회원정보수정</a></li>
-            </ul>
-            -->	
-            <ul>
-                <li><a href="" class="btn_s">로그인</a></li>
-                <li><a href="" class="btn_s">회원가입</a></li>
-            </ul>
-            
-        </div>
-        <!-- //header -->
-
-        <div id="nav">
-            <ul class="clearfix">
-                <li><a href="">입사지원서</a></li>
-                <li><a href="">게시판</a></li>
-                <li><a href="">갤러리</a></li>
-                <li><a href="">방명록</a></li>
-            </ul>
-        </div>
-        <!-- //nav -->
+        <AppHeader/>
 
         <div id="container" class="clearfix">
             <div id="aside">
@@ -110,10 +82,8 @@
         </div>
         <!-- //container  -->
 
-        <div id="footer">
-            Copyright ⓒ 2020 황일영. All right reserved
-        </div>
-        <!-- //footer -->
+        <AppFooter/>
+        <!-- footer -->
 
         </div>
         <!-- //wrap -->
@@ -124,10 +94,15 @@
  <script>
  import axios from 'axios'
  import "@/assets/css/user.css"
+ import AppFooter from "@/components/AppFooter.vue";
+ import AppHeader from "@/components/AppHeader.vue";     
 
  export default {
     name: "ModifyFormView",
-    components: {},
+    components: {
+        AppHeader,
+        AppFooter
+    },
     data() {
         return {
             userVo :{// 서버에서오는 return의 이름이랑은 안똑같아도됨.
@@ -140,7 +115,7 @@
         };
     },
     methods: {
-        login(){
+        getAuthUser(){//로그인한 사용자 정보 한명 가져오기
             axios({
                 method: 'get', // put, post, delete 
                 url: 'http://localhost:9000/api/users/modify',
@@ -151,8 +126,16 @@
                 //data: guestbookVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달-> 토큰만줄꺼라 params,data아무것도 안줘도 됨
                 responseType: 'json' //수신타입
             }).then(response => {
-                console.log(response); //수신데이타
-                this.userVo = response.data;
+                //data.apiData >userVo
+                //토큰x,비로그인,변조
+                if(response.data.result =="success"){
+                    console.log(response); //수신데이타
+                    this.userVo = response.data.apiData;
+                }else{
+                    console.log("토큰x,비로그인,변조");
+                    this.$router.push("/user/loginform");
+                    alert("로그인해주세요");
+                }
             }).catch(error => {
                 console.log(error);
             });
@@ -171,30 +154,49 @@
                 data: this.userVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달
                 responseType: 'json' //수신타입
             }).then(response => {
-                console.log(response); //수신데이타
+                console.log("response"+response); //수신데이타
+                console.log("response.data: "+response.data); //수신데이타
+                console.log("response.data.apiData: "+response.data.apiData); //수신데이타
 
                 // let authUserName = this.userVo.name;//위에 넣은 값에서 name을 가져와도 되고,
-                let authUserName = response.data;//return값을 이름으로 받은걸로 넣을땐 요걸로 사용
+                //let authUserName = response.data;//return값을 이름으로 받은걸로 넣을땐 요걸로 사용
 
-                if(authUserName !="fail"){
-                    // vuex의 이름을 변경
-                    this.$store.commit("setAuthName", authUserName);
+                // if(authUserName !="fail"){
+                //     // vuex의 이름을 변경
+                //     this.$store.commit("setAuthName", authUserName);
     
-                    // console.log(authUserName);
+                //     // console.log(authUserName);
     
+                //     //메인으로 이동
+                //     this.$router.push("/");
+
+                // }else{
+                //     //토큰오류
+                //     //vuex token,authUser 삭제(변질되어서 또 쓸수가 없다.)
+                //     this.$store.commit("setAuthUser", null);
+                //     this.$store.commit("setToken", null);
+
+                //     alert("로그인하세요");
+
+                //     //메인으로 이동
+                //     this.$router.push("/user/loginform");
+                // }
+
+                //JsonResult사용한 방법
+                if(response.data.result == "success"){
+                    console.log("result = success");
+                    let name = response.data.apiData;//컨트롤러에서 보낸 값이 name이기 때문에 name이 apiData의 값이 된다. 
+
+                    //vuex의 이름을 변경
+                    this.$store.commit("setAuthName",name);
+
                     //메인으로 이동
                     this.$router.push("/");
-
                 }else{
-                    //토큰오류
-                    //vuex token,authUser 삭제(변질되어서 또 쓸수가 없다.)
-                    this.$store.commit("setAuthUser", null);
-                    this.$store.commit("setToken", null);
-
-                    alert("로그인하세요");
-
-                    //메인으로 이동
-                    this.$router.push("/user/loginform");
+                    console.log("result = fail");
+                    console.log(response.data.message);
+                    this.$store.commit("setAuthUser",null);
+                    this.$store.commit("setToken",null);
                 }
 
             }).catch(error => {
@@ -205,7 +207,7 @@
 
     },
     created(){//메소드 자체는 위에서 만들고 여기서는 실행만 해주면 됨.
-        this.login();
+        this.getAuthUser();
     }
  };
  </script>
