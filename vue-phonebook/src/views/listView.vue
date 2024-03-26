@@ -6,38 +6,36 @@
 
         <p>등록된 전화번호 리스트입니다.</p>
 
-        <div >
-            <button type="button" v-on:click="getList">리스트 가져오기</button>
-            <table border="1">
-                <colgroup>
-                    <col style="width: 100px;">
-                    <col style="width: 120px;">
-                    <col style="width: 120px;">
-                    <col style="width: 190px;">
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>이름(name)</th>
-                        <th>핸드폰(hp)</th>
-                        <th>회사(company)</th>
-                        <th>관리</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>정우성</td>
-                        <td>010-2222-2222</td>
-                        <td>02-2222-2222</td>
-                        <td>
-                            <button type="button">삭제하기</button>&nbsp;&nbsp;
-                            <!-- <router-link v-bind:to="`/delete/${guestbookVo.no}`">삭제</router-link> -->
-                            <a href="">[수정폼이동]</a>
-                        </td>
-                    </tr>
-                </tbody>	
-            </table>
-            <br>
-        </div>
+        <table border="1">
+            <colgroup>
+                <col style="width: 100px;">
+                <col style="width: 120px;">
+                <col style="width: 120px;">
+                <col style="width: 190px;">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>이름(name)</th>
+                    <th>핸드폰(hp)</th>
+                    <th>회사(company)</th>
+                    <th>관리</th>
+                </tr>
+            </thead>
+            <!-- <button type="button" v-on:click="getList">리스트 가져오기</button> -->
+            <tbody v-bind:key="i" v-for="(phonebookVo,i) in phonebookList">
+                <tr>
+                    <td>{{ phonebookVo.name }}</td>
+                    <td>{{ phonebookVo.hp }}</td>
+                    <td>{{ phonebookVo.company }}</td>
+                    <td>
+                        <button type="button">삭제하기</button>&nbsp;&nbsp;
+                        <router-link v-bind:to="`/modifyform/${phonebookVo.personId}`">[수정폼이동]</router-link>
+                    </td>
+                </tr>
+    
+            </tbody>	
+        </table>
+        <br>
 
         <a href="">등록폼 이동</a>
     </div>
@@ -48,7 +46,9 @@ export default {
     name: "listView",
     components: {},
     data() {
-        return {};
+        return {
+            phonebookList:[]
+        };
     },
     methods: {
         getList(){
@@ -62,6 +62,8 @@ export default {
                 responseType: 'json' //수신타입
             }).then(response => {
                 console.log(response); //수신데이타
+
+                this.phonebookList = response.data;//data(){}에 넣어주면 연결되어 쓸 수 있음. 빈배열만들어서 한꺼번에 넣어주자
                 
             }).catch(error => {
                 console.log(error);
@@ -71,7 +73,9 @@ export default {
 
         }
     },
-    created(){}
+    created(){
+        this.getList();
+    }
 };
 </script>
 <style></style>

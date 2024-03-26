@@ -10,7 +10,7 @@ const routes = [
     component: listView
   },
   {
-    path: '/modifyform',
+    path: '/modifyform:no',
     name: '/modifyform',
     component: modifyFormView
   },

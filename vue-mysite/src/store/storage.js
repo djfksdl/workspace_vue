@@ -5,7 +5,7 @@ export default createStore({
     state() {//state:값 - 여기가 데이터 넣는곳: ex) data(){}
         return {//여기부분은 저장소. 원래 여기부분은 한바퀴 돌아도 안사라짐, 대신 새로고침하면 없어지는데(초기화) pludgins에 써진건 디비에 저장이 됨. 브라우저의 디비에 저장됨. 새로고침하면 이부분은 다시 읽어서 계속 유지됨.
             authUser: null,//여기서 값을 변경하려면 아래 메소드를 만들어놔야함. 
-            token: null//여기서 바로 값을 넣지 않고 밑에서 setter이용해서 넣음. 처음값은 null로~ // 토큰이 저장되어있어야 꺼내갈때 다시 색출할 수 있다.
+            token: null,//여기서 바로 값을 넣지 않고 밑에서 setter이용해서 넣음. 처음값은 null로~ // 토큰이 저장되어있어야 꺼내갈때 다시 색출할 수 있다.
         };
     },
     mutations: {//여기가 methods(){}:동작 - 여기쓰는 문법이 살짝 특이함.
@@ -14,6 +14,9 @@ export default createStore({
         },
         setToken(state, payload){
             state.token = payload;//이렇게 쓰면 위에 data()쪽에 들어간다. 값이
+        },
+        setAuthName(state, payload){
+            state.authUser.name = payload;
         }
     },
     plugins: [

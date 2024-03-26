@@ -146,7 +146,8 @@ export default {
 
                     console.log(authUser);
                     console.log(token);
-
+                    
+                    //메인으로 이동
                     this.$router.push("/");
 
                 }).catch(error => {
