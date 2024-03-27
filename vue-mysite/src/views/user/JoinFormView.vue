@@ -58,7 +58,7 @@
                                 <span class="form-text">성별</span> 
                                 
                                 <label for="rdo-male">남</label> 
-                                <input type="radio" id="rdo-male" name="gender" value="male" v-model="userVo.gedner"> 
+                                <input type="radio" id="rdo-male" name="gender" value="male" v-model="userVo.gedner" checked> 
                                 
                                 <label for="rdo-female">여</label> 
                                 <input type="radio" id="rdo-female" name="gender" value="female" v-model="userVo.gender"> 
@@ -69,7 +69,7 @@
                             <div class="form-group">
                                 <span class="form-text">약관동의</span> 
                                 
-                                <input type="checkbox" id="chk-agree" value="" name="">
+                                <input type="checkbox" id="chk-agree" v-model="agree" name="agree">
                                 <label for="chk-agree">서비스 약관에 동의합니다.</label> 
                             </div>
                             
@@ -97,6 +97,7 @@
  </template>
 
  <script>
+ import axios from "axios";
  import AppHeader from "@/components/AppHeader.vue";
  import AppFooter from "@/components/AppFooter.vue";
  export default {
@@ -112,12 +113,49 @@
                 password:"",
                 name:"",
                 gedner:""
-            }
+            },
+            agree:""
         };
     },
     methods: {
-        join(){
+        join(event){
             console.log("회원가입");
+
+            if(this.userVo.id == ""){
+                event.preventDefault();
+                alert("아이디를 입력해주세요.");
+                return false;
+            }else if(this.userVo.password == ""){
+                event.preventDefault();
+                alert("비밀번호를 입력해주세요.");
+                return false;
+            }else if(this.userVo.name ==""){
+                event.preventDefault();
+                alert("이름을 입력해주세요.");
+                return false;
+            }else if(this.agree == ""){
+                event.preventDefault();
+                alert("약관에 동의해주세요");
+                return false;  
+            }
+            else{
+                axios({
+                    method: 'post', // put, post, delete 
+                    url: 'http://localhost:9000/api/users/join',
+                    headers: { "Content-Type": "application/json; charset=utf-8" }, //전송타입
+                    // params: guestbookVo, //get방식 파라미터로 값이 전달
+                    data: this.userVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달
+                    responseType: 'json' //수신타입
+                }).then(response => {
+                    console.log(response); //수신데이타
+    
+                    this.$router.push("/user/loginform");
+                }).catch(error => {
+                    console.log(error);
+                });
+
+            }
+
 
             
         }
