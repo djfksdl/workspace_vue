@@ -7,6 +7,10 @@ import AttachFormView from '@/views/attach/AttachFormView'
 import AttachResultView from '@/views/attach/AttachResultView'
 import AddListView from '@/views/guestbook/AddListView.vue'
 import DeleteFormView from '@/views/guestbook/DeleteFormView.vue'
+import ListView from '@/views/board/ListView.vue'
+import BoardModifyFormView from '@/views/board/ModifyFormView.vue'
+import WriteFormView from '@/views/board/WriteFormView.vue'
+import ReadView from '@/views/board/ReadView.vue'
 
 const routes = [
   {
@@ -49,6 +53,27 @@ const routes = [
     name: '/guest/deleteform',
     component: DeleteFormView
   },
+  {
+    path: '/board/list',
+    name: '/board/list',
+    component: ListView
+  },
+  {
+    path: '/board/modifyform',
+    name: '/board/modifyform',
+    component: BoardModifyFormView
+  },
+  {
+    path: '/board/writeform',
+    name: '/board/writeform',
+    component: WriteFormView
+  },
+  {
+    path: '/board/read/:no',
+    name: '/board/read',
+    component: ReadView
+  },
+
 ]
 
 const router = createRouter({
