@@ -35,10 +35,13 @@
                 <div id="file">
                     
                         <div>
-                            <img id="resultImg" src="">
+                            <!-- 백틱: 문자열안에 변수로 인식할 수 있게 해줌. 그럼 +로 문자열이랑 변수랑 따로 안빼도됨. -->
+                            <img id="resultImg" v-bind:src="`http://localhost:9000/upload/${this.$route.query.saveName}`"><!-- 주소를 /upload/ 배정하고 뒤에 파일명이 오면 c드라이브를 뒤지자는 설정을 해야함.-->
+                            <!-- http://localhost:9000/upload/1711508093112e26ea34d-b825-4ae7-a618-839c0ea58b43.jpg  이렇게 uplaod/savaName을 치면 드라이브 뒤져서 사진 나옴 -->
                         </div>
                         <p>
-                            <a id="btnUpload" href="">다시 업로드 하기</a>
+                            <router-link id="btnUpload" to="/attach/form">다시 업로드하기</router-link>
+                            <!-- <a id="btnUpload" href="">다시 업로드 하기</a> -->
                         </p>
                     
                 </div>

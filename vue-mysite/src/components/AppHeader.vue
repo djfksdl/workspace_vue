@@ -20,7 +20,7 @@
                     <!-- <a href="" class="btn_s">로그인</a> -->
                 </li>
                 <li>
-                    <a href="" class="btn_s">회원가입</a>
+                    <router-link class="btn_s" to="/user/joinform">회원가입</router-link>
                 </li>
             </ul>
             

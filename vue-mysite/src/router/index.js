@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import MainView from '@/views/main/MainView.vue'
 import LoginFormView from '@/views/user/LoginFormView'
 import ModifyFormView from '@/views/user/ModifyFormView'
+import JoinFormView from '@/views/user/JoinFormView'
 import AttachFormView from '@/views/attach/AttachFormView'
 import AttachResultView from '@/views/attach/AttachResultView'
 
@@ -20,6 +21,11 @@ const routes = [
     path: '/user/modifyform',
     name: '/user/modifyform',
     component: ModifyFormView
+  },
+  {
+    path: '/user/joinform',
+    name: '/user/joinform',
+    component: JoinFormView
   },
   {
     path: '/attach/form',
