@@ -69,7 +69,8 @@
                                 <td>{{ guestbookVo.no }}</td>
                                 <td>{{ guestbookVo.name }}</td>
                                 <td>{{ guestbookVo.reg_date }}</td>
-                                <td><a href="">[삭제]</a></td>
+                                
+                                <td><router-link v-bind:to="`/guest/deleteform/${guestbookVo.no}`">[삭제]</router-link></td>
                             </tr>
                             <tr>
                                 <td colspan=4 class="text-left">방명록 글입니다. 방명록 글입니다.</td>

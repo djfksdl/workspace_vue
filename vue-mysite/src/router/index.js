@@ -45,7 +45,7 @@ const routes = [
     component: AddListView
   },
   {
-    path: '/guest/deleteform',
+    path: '/guest/deleteform/:no',
     name: '/guest/deleteform',
     component: DeleteFormView
   },

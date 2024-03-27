@@ -30,7 +30,7 @@
                 <!-- //content-head -->
 
                 <div id="guestbook">
-                    <form action="" method="">
+                    <form v-on:submit.prevent="deleteGuest" action="" method="">
                         <table id="guestDelete">
                             <colgroup>
                                 <col style="width: 10%;">
@@ -40,9 +40,9 @@
                             </colgroup>
                             <tr>
                                 <td>비밀번호</td>
-                                <td><input type="password" name="pass"></td>
+                                <td><input type="password" name="password" v-model="password"></td>
                                 <td class="text-left"><button type="submit">삭제</button></td>
-                                <td><a href="/guestbook2/gbc">[메인으로 돌아가기]</a></td>
+                                <td><router-link to="/guest/addlist">[메인으로 돌아가기]</router-link></td>
                             </tr>
                         </table>
                         <input type='hidden' name="" value="">
@@ -65,6 +65,7 @@
     </div>
  </template>
  <script>
+ import axios from "axios";
  import "@/assets/css/guestbook.css"
  import AppHeader from "@/components/AppHeader.vue";
  import AppFooter from "@/components/AppFooter.vue";
@@ -75,9 +76,32 @@
         AppFooter
     },
     data() {
-        return {};
+        return {
+
+            password:"",
+            no:this.$route.params.no
+        };
     },
-    methods: {},
+    methods: {
+        deleteGuest(){
+            console.log("삭제버튼");
+            // console.log(this.no);
+
+            axios({
+                method: 'delete', // put, post, delete 
+                url: 'http://localhost:9000/api/guests/'+this.no,
+                headers: { "Content-Type": "application/json; charset=utf-8" }, //전송타입
+                // params: guestbookVo, //get방식 파라미터로 값이 전달
+                data: {password: this.password}, //@RequestBody는 @modelAttribute처럼 작동한다. 하나만 들어가도 Requestparam처럼 받는게 아니다! 이렇게 넣어도 setPassword로 알아서 넣어줌.디스패쳐가 받아서!
+                responseType: 'json' //수신타입
+            }).then(response => {
+                console.log(response); //수신데이타
+                this.$router.push('/guest/addlist');
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+    },
     created(){}
  };
  </script>
