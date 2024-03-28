@@ -35,44 +35,36 @@
                                 <!-- 작성자 -->
                                 <div class="form-group">
                                     <span class="form-text">작성자</span>
-                                    <span class="form-value">정우성</span>
+                                    <span class="form-value">{{boardVo.name}}</span>
                                 </div>
                                 
                                 <!-- 조회수 -->
                                 <div class="form-group">
                                     <span class="form-text">조회수</span>
-                                    <span class="form-value">123</span>
+                                    <span class="form-value">{{boardVo.hit}}</span>
                                 </div>
                                 
                                 <!-- 작성일 -->
                                 <div class="form-group">
                                     <span class="form-text">작성일</span>
-                                    <span class="form-value">2020-03-02</span>
+                                    <span class="form-value">{{boardVo.reg_date}}</span>
                                 </div>
                                 
                                 <!-- 제목 -->
                                 <div class="form-group">
                                     <span class="form-text">제 목</span>
-                                    <span class="form-value">여기에는 글제목이 출력됩니다.</span>
+                                    <span class="form-value">{{boardVo.title}}</span>
                                 </div>
                             
                                 <!-- 내용 -->
                                 <div id="txt-content">
-                                    <span class="form-value" >
-                                        여기에는 본문내용이 출력됩니다.<br>
-                                        여기에는 본문내용이 출력됩니다.<br>
-                                        여기에는 본문내용이 출력됩니다.<br>
-                                        여기에는 본문내용이 출력됩니다.<br>
-                                        여기에는 본문내용이 출력됩니다.<br>
-                                        여기에는 본문내용이 출력됩니다.<br>
-                                        여기에는 본문내용이 출력됩니다.<br>
-                                        여기에는 본문내용이 출력됩니다.<br>
-                                    </span>
+                                    <span class="form-value" >{{boardVo.content}}</span>
                                 </div>
                                 
-                                <a id="btn_modify" href="">수정</a>
-                                <a id="btn_modify" href="">목록</a>
-                                
+                                <div v-if="this.$store.state.authUser.no == boardVo.user_no">
+                                    <router-link to="/board/modifyform" id="btn_modify">수정</router-link>
+                                </div>
+                                <router-link id="btn_modify" to="/board/list">목록</router-link>
                             </form>
                             <!-- //form -->
                         </div>
@@ -103,7 +95,15 @@
     },
     data() {
         return {
-            no: this.$route.params.no
+            no: this.$route.params.no,
+            boardVo:{
+                user_no:"",
+                name:"",
+                hit:"",
+                reg_date:"",
+                title:"",
+                content:""
+            }
         };
     },
     methods: {
@@ -120,6 +120,8 @@
             }).then(response => {
                 console.log(response); //수신데이타
                 console.log(response.data.apiData);
+                this.boardVo = response.data.apiData
+
             }).catch(error => {
                 console.log(error);
             });

@@ -56,15 +56,22 @@
                                         <td>{{ boardVo.name }}</td>
                                         <td>{{ boardVo.hit }}</td>
                                         <td>{{ boardVo.reg_date }}</td>
-                                        <td><a href="">[삭제]</a></td>
+                                        <td v-if="this.$store.state.authUser !=null && this.$store.state.authUser.no == boardVo.user_no">
+                                            <!-- 로그인 안되어있을때랑 no가 일치할때로 조건 설정해줘야 else일때 로그인 안될때 no를 비교하지 않음! 그래야 오류 안남! -->
+                                            <button v-on:click="deleteBtn(boardVo.no)" type="button">[삭제]</button>
+                                        </td>
+                                        <td v-else></td>
                                     </tr>
                                 </tbody>
                             </table>
                 
                             
-                            <div>
-                                <a id="btn_write" href="">글쓰기</a>
+                            <div v-if="this.$store.state.authUser !=null">
+                                <router-link to="/board/writeform" id="btn_write">글쓰기</router-link>
+                                <!-- <a id="btn_write" href="">글쓰기</a> -->
                             </div>
+                            <div v-else></div>
+
                             <div class="clear"></div>
                             <div>
                                 <button id="btn_moreBoard" type="button">글 가져오기</button>
@@ -103,22 +110,59 @@
         };
     },
     methods: {
+        //리스트 가져오기
         getList(){
             axios({
                 method: 'get', // put, post, delete 
                 url: 'http://localhost:9000/api/boards',
-                headers: { "Content-Type": "application/json; charset=utf-8" }, //전송타입
+                headers: { "Content-Type": "application/json; charset=utf-8"}, //전송타입
                 // params: guestbookVo, //get방식 파라미터로 값이 전달
                 // data: guestbookVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달
                 responseType: 'json' //수신타입
             }).then(response => {
                 console.log(response); //수신데이타
+                // console.log("현재 로그인한 no:"+this.$store.state.authUser.no); <-- 요거 로그인 안되있을때 주석처리 안되어있으면 오류남. 여기서부터 막히기 때문에 리스트 안불러옴 주의!
+                // console.log("현재 로그인한 name:"+this.$store.state.authUser.name);
 
                 this.boardList=response.data.apiData;
+                // console.log("돌고있는 첫번째 게시판의 작성자no: "+this.boardList[0].user_no);
 
             }).catch(error => {
                 console.log(error);
             });
+
+            
+        },
+        //글삭제하기
+        deleteBtn(no){
+            // console.log("삭제!!!");
+            console.log(no);
+
+            axios({
+                method: 'delete', // put, post, delete 
+                url: 'http://localhost:9000/api/boards',
+                headers: { "Content-Type": "application/json; charset=utf-8" }, //전송타입
+                params: {no:no}, //get방식 파라미터로 값이 전달
+                // data: guestbookVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달
+                responseType: 'json' //수신타입
+            }).then(response => {
+                console.log(response); //수신데이타
+
+                //여기서 한개 보낸것만 삭제할 수 있는지? 아니면 등록이 아니면(unshift)같은거 없어서 리스트 불러와야하는지?
+                //=>기획에 따라 다름. 나중에 '글 더보기'눌러서 펼쳐놨을때 리스트 불러오기로 하면, 다시 접히고 맨위로 가서 불편할 수 있음. 
+                //해당 배열의 정보만 없애기 
+        
+                const index = this.boardList.findIndex(board => board.no === no);
+                if (index !== -1) {
+                    this.boardList.splice(index, 1);
+                }
+
+            }).catch(error => {
+                console.log(error);
+            });
+
+
+
         }
     },
     created(){

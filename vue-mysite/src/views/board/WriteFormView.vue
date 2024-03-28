@@ -31,19 +31,19 @@
 
                     <div id="board">
                         <div id="writeForm">
-                            <form action="#" method="get">
+                            <form v-on:submit.prevent="addWrite" action="#" method="get">
                                 <!-- 제목 -->
                                 <div class="form-group">
                                     <label class="form-text" for="txt-title">제목</label>
-                                    <input type="text" id="txt-title" name="" value="" placeholder="제목을 입력해 주세요">
+                                    <input type="text" id="txt-title" name="title" v-model="boardVo.title" placeholder="제목을 입력해 주세요">
                                 </div>
                             
                                 <!-- 내용 -->
                                 <div class="form-group">
-                                    <textarea id="txt-content"></textarea>
+                                    <textarea id="txt-content" name="content" v-model="boardVo.content" ></textarea>
                                 </div>
                                 
-                                <a id="btn_cancel" href="">취소</a>
+                                <router-link id="btn_cancel" to="/board/list" >취소</router-link>
                                 <button id="btn_add" type="submit" >등록</button>
                                 
                             </form>
@@ -66,6 +66,7 @@
     </div>
  </template>
  <script>
+ import axios from 'axios';
  import '@/assets/css/board.css'
  import AppHeader from '@/components/AppHeader.vue'
  import AppFooter from '@/components/AppFooter.vue'
@@ -77,9 +78,35 @@
         AppFooter
     },
     data() {
-        return {};
+        return {
+            boardVo:{
+                user_no:this.$store.state.authUser.no,
+                title:"",
+                content:""
+            }
+        };
     },
-    methods: {},
+    methods: {
+        addWrite(){
+            // console.log("등록할꺼!");
+            // console.log(this.boardVo.no);
+            axios({
+                method: 'post', // put, post, delete 
+                url: 'http://localhost:9000/api/boards',
+                headers: { "Content-Type": "application/json; charset=utf-8"}, //전송타입
+                // params: guestbookVo, //get방식 파라미터로 값이 전달
+                data: this.boardVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달
+                responseType: 'json' //수신타입
+            }).then(response => {
+                console.log(response); //수신데이타
+
+                this.$router.push('/board/list');
+            }).catch(error => {
+                console.log(error);
+            });
+
+        }
+    },
     created(){}
  };
  </script>
