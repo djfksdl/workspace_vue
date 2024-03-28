@@ -62,7 +62,7 @@
                                 </div>
                                 
                                 <div v-if="this.$store.state.authUser.no == boardVo.user_no">
-                                    <router-link to="/board/modifyform" id="btn_modify">수정</router-link>
+                                    <router-link v-bind:to="`/board/modifyform/${no}`" id="btn_modify">수정</router-link>
                                 </div>
                                 <router-link id="btn_modify" to="/board/list">목록</router-link>
                             </form>

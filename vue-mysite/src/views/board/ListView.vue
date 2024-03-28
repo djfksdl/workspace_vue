@@ -58,7 +58,7 @@
                                         <td>{{ boardVo.reg_date }}</td>
                                         <td v-if="this.$store.state.authUser !=null && this.$store.state.authUser.no == boardVo.user_no">
                                             <!-- 로그인 안되어있을때랑 no가 일치할때로 조건 설정해줘야 else일때 로그인 안될때 no를 비교하지 않음! 그래야 오류 안남! -->
-                                            <button v-on:click="deleteBtn(boardVo.no)" type="button">[삭제]</button>
+                                            <button id="dBtn" v-on:click="deleteBtn(boardVo.no)" type="button">[삭제]</button>
                                         </td>
                                         <td v-else></td>
                                     </tr>

@@ -31,46 +31,39 @@
 
                     <div id="board">
                         <div id="modifyForm">
-                            <form action="#" method="get">
+                            <form v-on:submit.prevent="modify" action="#" method="get">
                                 <!-- 작성자 -->
                                 <div class="form-group">
                                     <span class="form-text">작성자</span>
-                                    <span class="form-value">정우성</span>
+                                    <span class="form-value">{{ boardVo.name }}</span>
                                 </div>
                                 
                                 <!-- 조회수 -->
                                 <div class="form-group">
                                     <span class="form-text">조회수</span>
-                                    <span class="form-value">123</span>
+                                    <span class="form-value">{{ boardVo.hit }}</span>
                                 </div>
                                 
                                 <!-- 작성일 -->
                                 <div class="form-group">
                                     <span class="form-text">작성일</span>
-                                    <span class="form-value">2020-03-02</span>
+                                    <span class="form-value">{{ boardVo.reg_date }}</span>
                                 </div>
                                 
                                 <!-- 제목 -->
                                 <div class="form-group">
                                     <label class="form-text" for="txt-title">제목</label>
-                                    <input type="text" id="txt-title" name="" value="여기에는 글제목이 출력됩니다.">
+                                    <input type="text" id="txt-title" name="title" v-model="boardVo.title">
                                 </div>
                             
                                 
                             
                                 <!-- 내용 -->
                                 <div class="form-group">
-                                    <textarea id="txt-content">여기에는 본문내용이 출력됩니다.
-            여기에는 본문내용이 출력됩니다.
-            여기에는 본문내용이 출력됩니다.
-            여기에는 본문내용이 출력됩니다.
-            여기에는 본문내용이 출력됩니다.
-            여기에는 본문내용이 출력됩니다.
-            여기에는 본문내용이 출력됩니다.
-            여기에는 본문내용이 출력됩니다.</textarea>
+                                    <textarea id="txt-content" name="content" v-model="boardVo.content"></textarea>
                                 </div>
                                 
-                                <a id="btn_cancel" href="">취소</a>
+                                <router-link id="btn_cancel" to="/board/list" >취소</router-link>
                                 <button id="btn_modify" type="submit" >수정</button>
                                 
                             </form>
@@ -92,6 +85,7 @@
     </div>
  </template>
  <script>
+ import axios from 'axios';
  import '@/assets/css/board.css'
  import AppHeader from '@/components/AppHeader.vue'
  import AppFooter from '@/components/AppFooter.vue'
@@ -102,10 +96,61 @@
         AppFooter
     },
     data() {
-        return {};
+        return {
+            boardVo:{
+                no: this.$route.params.no,
+                user_no:"",
+                name:"",
+                hit:"",
+                reg_date:"",
+                title:"",
+                content:""
+            }
+        };
     },
-    methods: {},
-    created(){}
+    methods: {
+        //하나의 글정보 가져오기
+        getOneWrited(){
+            // console.log(this.no);
+            axios({
+                method: 'get', // put, post, delete 
+                url: 'http://localhost:9000/api/boards/'+this.boardVo.no,
+                headers: { "Content-Type": "application/json; charset=utf-8" }, //전송타입
+                // params: {no:this.no}, //get방식 파라미터로 값이 전달 -간단한거 보내면 상관없음.
+                // data: {no:this.no}, //put, post, delete 방식 자동으로 JSON으로 변환 전달 - 복잡한 리스트같은거 보낼때 좋음. 아니면 formData로 보내도됨.
+                responseType: 'json' //수신타입
+            }).then(response => {
+                // console.log(response); //수신데이타
+                // console.log(response.data.apiData);
+                this.boardVo = response.data.apiData
+
+            }).catch(error => {
+                console.log(error);
+            });
+        },
+        modify(){
+            // console.log("수정!");
+                axios({
+                    method: 'put', // put, post, delete 
+                    url: 'http://localhost:9000/api/boards',
+                    headers: { "Content-Type": "application/json; charset=utf-8" }, //전송타입
+                    // params: {no:this.no}, //get방식 파라미터로 값이 전달 -간단한거 보내면 상관없음.
+                    data: this.boardVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달 - title,content보내기
+                    responseType: 'json' //수신타입
+                }).then(response => {
+                    console.log(response); //수신데이타
+                    // console.log(response.data.apiData);
+                    this.$router.push('/board/list');
+
+                }).catch(error => {
+                    console.log(error);
+                });
+
+        }
+    },
+    created(){
+        this.getOneWrited();
+    }
  };
  </script>
  <style></style>

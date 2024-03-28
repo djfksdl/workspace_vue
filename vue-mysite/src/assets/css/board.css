@@ -44,7 +44,11 @@
 #board #list table>tbody>tr>td {
     padding: 10px 0px 10px 0px;
 }
-
+#dBtn{
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}
 /* 게시판 페이징 */
 #board #list #paging {
 	margin: 0px auto;
