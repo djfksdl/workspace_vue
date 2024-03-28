@@ -11,6 +11,7 @@ import ListView from '@/views/board/ListView.vue'
 import BoardModifyFormView from '@/views/board/ModifyFormView.vue'
 import WriteFormView from '@/views/board/WriteFormView.vue'
 import ReadView from '@/views/board/ReadView.vue'
+import GalleryListView from '@/views/gallery/ListView.vue'
 
 const routes = [
   {
@@ -72,6 +73,11 @@ const routes = [
     path: '/board/read/:no',
     name: '/board/read',
     component: ReadView
+  },
+  {
+    path: '/gallery/list',
+    name: '/gallery/list',
+    component: GalleryListView
   },
 
 ]

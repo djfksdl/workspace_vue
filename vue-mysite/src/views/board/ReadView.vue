@@ -97,7 +97,7 @@
         return {
             no: this.$route.params.no,
             boardVo:{
-                user_no:"",
+                // user_no:"",
                 name:"",
                 hit:"",
                 reg_date:"",
