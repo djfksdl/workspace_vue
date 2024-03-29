@@ -95,7 +95,7 @@
         selectFile(event){
             console.log("파일선택");
             this.file = event.target.files[0] //기본이 배열이다. 그중에 하나만 선택하니까 files로 복수로 쓴다. 선택하면 여러방중에 하나가 생긴다. 0번째꺼 써야함.
-            
+           //파일이 들어갈때를 포착해서 그때 바로 가져와야하고 그 파일 자체를 가지고 있는것. 파라미터는 나중에 가져와도 된다.  
         },
         uploadFile(){
             console.log("파일업로드");

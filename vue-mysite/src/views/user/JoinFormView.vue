@@ -118,23 +118,23 @@
         };
     },
     methods: {
-        join(event){
+        join(){
             console.log("회원가입");
 
             if(this.userVo.id == ""){
-                event.preventDefault();
+                //event.preventDefault 를 안써도 어차피 위에서 막혀있어서 안보내짐. 
                 alert("아이디를 입력해주세요.");
-                return false;
+                return false; //여기서 작동이 안된다.(else에 있는곳으로 안넘어감) 그래서 else if안쓰고, if,if,if로 써도된다. 
             }else if(this.userVo.password == ""){
-                event.preventDefault();
+                // event.preventDefault();
                 alert("비밀번호를 입력해주세요.");
                 return false;
             }else if(this.userVo.name ==""){
-                event.preventDefault();
+                // event.preventDefault();
                 alert("이름을 입력해주세요.");
                 return false;
             }else if(this.agree == ""){
-                event.preventDefault();
+                // event.preventDefault();
                 alert("약관에 동의해주세요");
                 return false;  
             }
