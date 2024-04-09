@@ -2,7 +2,8 @@
     <div>
         <div id="center-content">
 		
-		<!--메인 해더 자리 -->
+            <!--메인 해더 자리 -->
+            <MainHeader/>
 		
             <form id="search-form">
                 <fieldset>
@@ -25,6 +26,7 @@
             </div>
             
             <!-- 메인 푸터  자리-->
+            <MainFooter/>
 	
 	
         </div>
@@ -32,10 +34,14 @@
     </div>
  </template>
  <script>
-
+ import MainHeader from "@/components/MainHeader.vue"
+ import MainFooter from "@/components/MainFooter.vue"
  export default {
     name: "MainIndex",
-    components: {},
+    components: {
+        MainHeader,
+        MainFooter
+    },
     data() {
         return {};
     },
