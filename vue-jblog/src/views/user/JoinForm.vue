@@ -6,7 +6,7 @@
             <MainHeader/>
 
             <div>		
-                <form id="joinForm" method="post" action="${pageContext.request.contextPath}/user/join">
+                <form id="joinForm" v-on:submit.prevent="join" method="post" action="${pageContext.request.contextPath}/user/join">
                     <table>
                         <colgroup>
                             <col style="width: 100px;">
@@ -15,7 +15,7 @@
                         </colgroup>
                         <tr>
                             <td><label for="txtId">아이디</label></td>
-                            <td><input id="txtId" type="text" name="id"></td>
+                            <td><input id="txtId" type="text" name="id" v-model="UserVo.id"></td>
                             <td><button id="btnIdCheck" type="button">아이디체크</button></td>
                         </tr>
                         <tr>
@@ -24,12 +24,12 @@
                         </tr> 
                         <tr>
                             <td><label for="txtPassword">패스워드</label> </td>
-                            <td><input id="txtPassword" type="password" name="password"  value=""></td>   
+                            <td><input id="txtPassword" type="password" name="password"  v-model="UserVo.password"></td>   
                             <td></td>  			
                         </tr> 
                         <tr>
                             <td><label for="txtUserName">이름</label> </td>
-                            <td><input id="txtUserName" type="text" name="userName"  value=""></td>   
+                            <td><input id="txtUserName" type="text" name="userName"  v-model="UserVo.userName"></td>   
                             <td></td>  			
                         </tr>  
                         <tr>
@@ -56,6 +56,7 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
 import MainHeader from "@/components/MainHeader.vue"
 import MainFooter from "@/components/MainFooter.vue"
 export default {
@@ -65,9 +66,32 @@ export default {
         MainFooter
     },
     data() {
-        return {};
+        return {
+            UserVo:{
+                id:"",
+                password:"",
+                userName:""
+            }
+        };
     },
-    methods: {},
+    methods: {
+        join(){
+            console.log("회원가입 버튼")
+
+            axios({
+                method: 'post', // put, post, delete 
+                url: 'http://localhost:9000/api/users/join',
+                headers: { "Content-Type": "application/json; charset=utf-8" }, //전송타입
+                params: this.UserVo, //get방식 파라미터로 값이 전달
+                // data: guestbookVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달
+                responseType: 'json' //수신타입
+            }).then(response => {
+                console.log(response); //수신데이타
+            }).catch(error => {
+                console.log(error);
+            })
+        }
+    },
     created(){}
 };
 </script>
