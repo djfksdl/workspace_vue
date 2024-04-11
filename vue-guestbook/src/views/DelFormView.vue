@@ -36,7 +36,7 @@
 
             axios({
                 method: 'delete', // put, post, delete 
-                url: 'http://localhost:9000/api/guests/'+this.no,//no는 주소에 붙여서 보낸다.
+                url: `${this.$store.state.apiBaseUrl}/api/guests`+this.no,//no는 주소에 붙여서 보낸다.
                 headers: { "Content-Type": "application/json; charset=utf-8" }, //전송타입
                 //params: guestbookVo, //get방식 파라미터로 값이 전달: 당분간 json으로 쓸거임. 따라서 param안씀
                 data: {password: this.password}, //put, post, delete 방식 자동으로 JSON으로 변환 전달- 하나만 보내더라도 객체모양{}으로 바꿔줘야함

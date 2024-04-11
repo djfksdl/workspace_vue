@@ -64,7 +64,8 @@ export default {
 
             axios({
                 method: 'get', // put, post, delete 
-                url: 'http://localhost:9000/api/guests',
+                // url: 'http://localhost:9000/api/guests',
+                url: `${this.$store.state.apiBaseUrl}/api/guests`,
                 headers: { "Content-Type": "application/json; charset=utf-8" }, //전송타입
                 //params: guestbookVo, //get방식 파라미터로 값이 전달: 당분간 json으로 쓸거임. 따라서 param안씀
                 //data: guestbookVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달- 리스트불러올때 보낼께 없어서 안씀
@@ -84,7 +85,8 @@ export default {
 
             axios({
                 method: 'post', // put, post, delete 
-                url: 'http://localhost:9000/api/guests',
+                // url: 'http://localhost:9000/api/guests',
+                url: `${this.$store.state.apiBaseUrl}/api/guests`,
                 headers: { "Content-Type": "application/json; charset=utf-8" }, //전송타입
                 //params: guestbookVo, //get방식 파라미터로 값이 전달: 당분간 json으로 쓸거임. 따라서 param안씀
                 data: this.guestbookVo, //put, post, delete 방식 자동으로 JSON으로 변환 전달- data에 있는거 써줘야해서 this붙임
